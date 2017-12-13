@@ -1,0 +1,33 @@
+{
+  "name": "sa11y",
+  "version": "0.0.1",
+  "description": "## License",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --ui tdd --timeout 5000 test/tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jugglinmike/sa11y.git"
+  },
+  "author": "Mike Pennisi",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/jugglinmike/sa11y/issues"
+  },
+  "homepage": "https://github.com/jugglinmike/sa11y#readme",
+  "dependencies": {
+    "selenium-webdriver": "^3.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "finalhandler": "^1.1.0",
+    "geckodriver": "^1.10.0",
+    "mocha": "^4.0.1",
+    "serve-static": "^1.13.1"
+  }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="./modal-dialogs.css" />
+</head>
+<body>
+	<div role="dialog" data-skip>
+		This element is declared to ensure that the library tolerates non-modal
+		dialogs.
+	</div>
+
+	<div tabindex="-1"
+		id="good"
+		aria-hidden="true"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">Well-implemented Dialog</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div tabindex="-1"
+		aria-hidden="true"
+		id="no-focus-capture"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">
+								Flawed Dialog (no focus capture)
+							</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div tabindex="-1"
+		aria-hidden="true"
+		id="no-escape-binding"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">
+								Flawed Dialog (no "Esc" key binding)
+							</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div tabindex="-1"
+		id="good-slow-close"
+		aria-hidden="true"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">Well-implemented Dialog that closes slowly</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div role="dialog" data-skip>
+		This element is declared to ensure that the library tolerates non-modal
+		dialogs.
+	</div>
+
+	<script src="./modal-dialogs.js"></script>
+</body>
+</html>
