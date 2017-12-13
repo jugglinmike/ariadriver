@@ -2,7 +2,12 @@
 let activeDialog = null;
 let prevFocused = null;
 
-function close(el, event) {
+function close(el, force) {
+  if (el.id === 'good-slow' && !force) {
+    setTimeout(() => close(el, true), 500);
+    return;
+  }
+
   el.setAttribute('aria-hidden', 'true');
   activeDialog = null;
 
@@ -11,7 +16,12 @@ function close(el, event) {
     prevFocused = null;
   }
 }
-function open(el) {
+function open(el, force) {
+  if (el.id === 'good-slow' && !force) {
+    setTimeout(() => open(el, true), 500);
+    return;
+  }
+
   prevFocused = document.activeElement;
   activeDialog = el;
   el.setAttribute('aria-hidden', 'false');
@@ -25,7 +35,7 @@ function create(el) {
   el.querySelector('.dialog__close')
     .addEventListener('click', () => close(el));
 
-  openBtn.addEventListener('click', (event) => open(el, event));
+  openBtn.addEventListener('click', () => open(el));
 
   return openBtn;
 }
@@ -49,11 +59,6 @@ function handleKeypress(event) {
   }
 
   if (activeDialog.id === 'no-escape-binding') {
-    return;
-  }
-
-  if (activeDialog.id === 'good-slow-close') {
-    setTimeout(() => close(activeDialog), 500);
     return;
   }
 

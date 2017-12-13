@@ -58,6 +58,14 @@ suite('modal dialogs', () => {
       assert(false, 'Expected an error, but no error was thrown');
     });
 
+    test('waits for slow dialogs to open', async () => {
+      const initialCount = await countOpen();
+
+      await sa11y.openModal('[for="good-slow"]');
+
+      assert.equal(await countOpen(), initialCount + 1);
+    });
+
     test.skip('reports an error when focus is not bound to the dialog');
   });
 
@@ -96,7 +104,7 @@ suite('modal dialogs', () => {
     });
 
     test('waits for slow dialogs to close', async () => {
-      await open('good-slow-close');
+      await open('good-slow');
       const initialCount = await countOpen();
 
       await sa11y.closeModal();
