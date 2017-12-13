@@ -5,10 +5,11 @@
 	<link rel="stylesheet" href="./modal-dialogs.css" />
 </head>
 <body>
-	<div role="dialog" data-skip>
+	<div role="dialog" id="non-modal-1" data-skip>
 		This element is declared to ensure that the library tolerates non-modal
 		dialogs.
 	</div>
+	<button for="non-modal-1">Inert button</button>
 
 	<div tabindex="-1"
 		id="good"
@@ -94,10 +95,11 @@
 			<div class="dialog__mask"></div>
 	</div>
 
-	<div role="dialog" data-skip>
+	<div role="dialog" id="non-modal-2" data-skip>
 		This element is declared to ensure that the library tolerates non-modal
 		dialogs.
 	</div>
+	<button for="non-modal-2">Inert button</button>
 
 	<script src="./modal-dialogs.js"></script>
 </body>

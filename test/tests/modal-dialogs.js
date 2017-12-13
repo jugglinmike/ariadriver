@@ -38,6 +38,29 @@ suite('modal dialogs', () => {
 
   setup(() => sa11y.get(baseUrl + '/fixtures/modal-dialogs.html'));
 
+  suite('#openModal', () => {
+    test('opens well-formed modal as expected', async () => {
+      const initialCount = await countOpen();
+
+      await sa11y.openModal('[for="good"]');
+
+      assert.equal(await countOpen(), initialCount + 1);
+    });
+
+    test('reports error when dialog is not opened', async () => {
+      try {
+        await sa11y.openModal('[for="non-modal-1"]');
+      } catch (err) {
+        assert.equal(err.name, 'Sa11yError', err.message);
+        return;
+      }
+
+      assert(false, 'Expected an error, but no error was thrown');
+    });
+
+    test.skip('reports an error when focus is not bound to the dialog');
+  });
+
   suite('#closeModal', () => {
     test('reports an error when no modal dialog is open', async () => {
       try {
