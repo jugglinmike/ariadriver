@@ -36,7 +36,19 @@ suite('modal dialogs', () => {
     await closeServers();
   });
 
-  setup(() => sa11y.get(baseUrl + '/fixtures/modal-dialogs.html'));
+  setup(function() {
+    this.warnings = [];
+
+    sa11y.on('warning', (warning) => this.warnings.push(warning.code));
+
+    return sa11y.get(baseUrl + '/fixtures/modal-dialogs.html');
+  });
+
+  teardown(function() {
+    sa11y.removeAllListeners();
+
+    assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
+  });
 
   suite('#openModal', () => {
     test('opens well-formed modal as expected', async () => {
@@ -65,6 +77,13 @@ suite('modal dialogs', () => {
       await sa11y.openModal('[for="good-slow"]');
 
       assert.equal(await countOpen(), initialCount + 1);
+    });
+
+    test('warns when dialog does not specify `aria-modal`', async function() {
+      await sa11y.openModal('[for="good-poor-semantics"]');
+
+      assert.deepEqual(this.warnings, ['SA11Y-POOR-SEMANTICS']);
+      this.warnings.length = 0;
     });
 
     test.skip('reports an error when focus is not bound to the dialog');

@@ -14,6 +14,7 @@
 	<div tabindex="-1"
 		id="good"
 		aria-hidden="true"
+		aria-modal="true"
 		role="dialog">
 			<div class="dialog__window" role="document">
 					<header role="banner">
@@ -34,6 +35,7 @@
 	<div tabindex="-1"
 		aria-hidden="true"
 		id="no-focus-capture"
+		aria-modal="true"
 		role="dialog">
 			<div class="dialog__window" role="document">
 					<header role="banner">
@@ -56,6 +58,7 @@
 	<div tabindex="-1"
 		aria-hidden="true"
 		id="no-escape-binding"
+		aria-modal="true"
 		role="dialog">
 			<div class="dialog__window" role="document">
 					<header role="banner">
@@ -78,10 +81,31 @@
 	<div tabindex="-1"
 		id="good-slow"
 		aria-hidden="true"
+		aria-modal="true"
 		role="dialog">
 			<div class="dialog__window" role="document">
 					<header role="banner">
 							<h2 id="dialog_title">Well-implemented Dialog that opens and closes slowly</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div tabindex="-1"
+		id="good-poor-semantics"
+		aria-hidden="true"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">Well-implemented Dialog that omits the `aria-modal` attribute</h2>
 							<button>Some other button</button>
 							<button
 								aria-label="Close dialog"
