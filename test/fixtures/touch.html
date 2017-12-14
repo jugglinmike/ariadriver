@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<style>*:focus { outline: solid 3px #a00; }</style>
+
+	<p>Valid focus targets:</p>
+
+	<a href="#" aria-label="Anchor with href">Anchor with href</a>
+	<link href="" aria-label="Link with href" />
+	<button aria-label="Button">Button</button>
+	<input aria-label="Input without type" />
+	<input type="text" aria-label="Text input" />
+	<input type="button" aria-label="Button input" />
+	<select aria-label="Select"></select>
+	<textarea aria-label="Textarea"></textarea>
+	<menu>
+		<menuitem aria-label="Valid menuitem" label="foo" type="command" />
+	</menu>
+	<div draggable="true" aria-label="Draggable div">Draggable div</div>
+	<div contenteditable aria-label="Editing host">Editing host</div>
+	<iframe src="about:blank" aria-label="Browsing context container"></iframe>
+	<div tabindex="1" aria-label="Div with tabindex">Div with tabindex</div>
+
+	<p>Invalid focus targets:</p>
+
+	<div aria-label="Div">Div</div>
+	<span aria-label="Span">Span</span>
+	<a aria-label="Anchor without href">Anchor without href</a>
+	<a href="#" aria-label="Hidden anchor" hidden>Hidden anchor</a>
+	<a href="#" aria-label="Invisible anchor" aria-hidden="true">Invisible anchor</a>
+	<link aria-label="Link without href">Link without href</link>
+	<link href="#" aria-label="Hidden link" hidden>Hidden link</link>
+	<link href="#" aria-label="Invisible link" aria-hidden="true">Invisible link</link>
+	<button disabled aria-label="Disabled button">Disabled button</button>
+
+	<p>Duplicated focus targets:</p>
+
+	<a href="#" aria-label="Duplicated anchor">Duplicated anchor #1</a>
+	<a href="#" aria-label="Duplicated anchor">Duplicated anchor #2</a>
+</body>
+</html>
