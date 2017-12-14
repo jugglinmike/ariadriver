@@ -52,6 +52,7 @@ suite('modal dialogs', () => {
         await sa11y.openModal('[for="non-modal-1"]');
       } catch (err) {
         assert.equal(err.name, 'Sa11yError', err.message);
+        assert.equal(err.code, 'SA11Y-TIMEOUT');
         return;
       }
 
@@ -71,10 +72,13 @@ suite('modal dialogs', () => {
 
   suite('#closeModal', () => {
     test('reports an error when no modal dialog is open', async () => {
+      await sa11y.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
+
       try {
         await sa11y.closeModal();
       } catch (err) {
         assert.equal(err.name, 'Sa11yError', err.message);
+        assert.equal(err.code, 'SA11Y-ELEMENT-NOT-FOUND');
         return;
       }
 
@@ -97,6 +101,7 @@ suite('modal dialogs', () => {
         await sa11y.closeModal();
       } catch (err) {
         assert.equal(err.name, 'Sa11yError', err.message);
+        assert.equal(err.code, 'SA11Y-TIMEOUT');
         return;
       }
 
