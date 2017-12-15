@@ -32,6 +32,10 @@ function create(el) {
   openBtn.innerHTML = `Open "${el.id}" modal`;
   openBtn.setAttribute('for', el.getAttribute('id'));
 
+  if (el.id !== 'no-haspopup') {
+    openBtn.setAttribute('aria-haspopup', 'dialog');
+  }
+
   el.querySelector('.dialog__close')
     .addEventListener('click', () => close(el));
 

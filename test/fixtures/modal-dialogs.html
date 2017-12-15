@@ -9,7 +9,7 @@
 		This element is declared to ensure that the library tolerates non-modal
 		dialogs.
 	</div>
-	<button for="non-modal-1">Inert button</button>
+	<button for="non-modal-1" aria-haspopup="dialog">Inert button</button>
 
 	<div tabindex="-1"
 		id="good"
@@ -64,6 +64,29 @@
 					<header role="banner">
 							<h2 id="dialog_title">
 								Flawed Dialog (no "Esc" key binding)
+							</h2>
+							<button>Some other button</button>
+							<button
+								aria-label="Close dialog"
+								class="dialog__close"
+								type="button">&times;</button>
+					</header>
+					<div>
+						This is some content.
+					</div>
+			</div>
+			<div class="dialog__mask"></div>
+	</div>
+
+	<div tabindex="-1"
+		aria-hidden="true"
+		id="no-haspopup"
+		aria-modal="true"
+		role="dialog">
+			<div class="dialog__window" role="document">
+					<header role="banner">
+							<h2 id="dialog_title">
+								Flawed Dialog (opening UI does not declare <code>aria-haspopup</code>)
 							</h2>
 							<button>Some other button</button>
 							<button

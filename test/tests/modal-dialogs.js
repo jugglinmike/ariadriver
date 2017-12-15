@@ -86,6 +86,18 @@ suite('modal dialogs', () => {
       this.warnings.length = 0;
     });
 
+    test('reports an error in the absence of `aria-haspopup`', async () => {
+      try {
+        await sa11y.openModal('[for="no-haspopup"]');
+      } catch (err) {
+        assert.equal(err.name, 'Sa11yError', err.message);
+        assert.equal(err.code, 'SA11Y-INVALID-MARKUP');
+        return;
+      }
+
+      assert(false, 'Expected an error, but no error was thrown');
+    });
+
     test.skip('reports an error when focus is not bound to the dialog');
   });
 
