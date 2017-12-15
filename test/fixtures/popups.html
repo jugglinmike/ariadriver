@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<style>
+	[role] {
+		position: relative;
+
+		border: solid 3px #000;
+		padding: 1em;
+	}
+	[aria-hidden="true"] {
+		color: #aaa;
+		border-style: dashed;
+		border-color: #aaa;
+	}
+	[aria-hidden="true"]:before, [aria-hidden="true"]:after {
+		position: absolute;
+
+		padding: 0 1em;
+
+		background-color: #aaa;
+		color: #fff;
+		content: 'HIDDEN';
+		font-weight: bold;
+	}
+	[aria-hidden="true"]:before {
+		top: 0;
+		left: 0;
+	}
+	[aria-hidden="true"]:after {
+		right: 0;
+		bottom: 0;
+	}
+	</style>
+</head>
+<body>
+	<p>Valid popup initiators:</p>
+
+	<button data-open-role="menu" aria-haspopup="true" aria-label="Value true">
+		value: "true"
+	</button>
+
+	<button data-open-role="menu" aria-haspopup="menu" aria-label="Value menu">
+		value: "menu"
+	</button>
+
+	<button data-open-role="listbox" aria-haspopup="listbox" aria-label="Value listbox">
+		value: "listbox"
+	</button>
+
+	<button data-open-role="tree" aria-haspopup="tree" aria-label="Value tree">
+		value: "tree"
+	</button>
+
+	<button data-open-role="grid" aria-haspopup="grid" aria-label="Value grid">
+		value: "grid"
+	</button>
+
+	<button data-open-role="dialog" aria-haspopup="dialog" aria-label="Value dialog">
+		value: "dialog"
+	</button>
+
+	<button data-open-role="dialog" aria-haspopup="dialog" aria-label="Slow">
+		value: "dialog" (slow to open)
+	</button>
+
+	<p>Invalid popup initiators</p>
+
+	<button aria-haspopup="false" aria-label="False">
+		value: "false"
+	</button>
+	<button aria-haspopup="other" aria-label="Invalid value">
+		Value invalid
+	</button>
+	<button aria-haspopup aria-label="Omitted value">
+		Value omitted
+	</button>
+	<button aria-label="Attribute omitted">
+		Attribute omitted
+	</button>
+	<button data-open-role="dialog" aria-haspopup="true" aria-label="Inaccurate value">
+		Value inaccurate
+	</button>
+
+	<p>"Popups"</p>
+
+	<div aria-hidden="true" role="menu">menu</div>
+	<div aria-hidden="true" role="listbox">listbox</div>
+	<div aria-hidden="true" role="tree">tree</div>
+	<div aria-hidden="true" role="grid">grid</div>
+	<div aria-hidden="true" role="dialog">dialog</div>
+
+	<script src="./popups.js"></script>
+</body>
+</html>
