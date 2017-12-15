@@ -1,0 +1,23 @@
+/**
+ * This file is intended to house styling that enhances the test fixture files
+ * for sighted users. It should not include any code that is required to
+ * satisfy test expectations. Such information should be placed as close to the
+ * test as possible.
+ */
+*:focus {
+	outline: solid 3px #a00;
+}
+
+/**
+ * The `aria-hidden` attribute is intentionally *not* configured to disable
+ * visibility. This reduces the chance that library internals will depend on
+ * visual presentation details.
+ */
+[aria-hidden="true"] {
+	color: #aaa;
+	outline: dashed 3px #aaa;
+}
+
+[aria-hidden="true"]:focus {
+	outline-color: #a00;
+}
