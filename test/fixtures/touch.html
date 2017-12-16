@@ -28,12 +28,36 @@
 	<div aria-label="Div">Div</div>
 	<span aria-label="Span">Span</span>
 	<a aria-label="Anchor without href">Anchor without href</a>
-	<a href="#" aria-label="Hidden anchor" hidden>Hidden anchor</a>
-	<a href="#" aria-label="Invisible anchor" aria-hidden="true">Invisible anchor</a>
 	<link aria-label="Link without href">Link without href</link>
-	<link href="#" aria-label="Hidden link" hidden>Hidden link</link>
-	<link href="#" aria-label="Invisible link" aria-hidden="true">Invisible link</link>
 	<button disabled aria-label="Disabled button">Disabled button</button>
+
+	<p>Imperceptible focus targets:</p>
+
+	<a href="#" aria-label="Hidden anchor" hidden>Hidden anchor</a>
+	<link href="#" aria-label="Hidden link" hidden>Hidden link</link>
+	<div hidden>
+		<a href="#" aria-label="Hidden child anchor">Hidden child anchor</a>
+		<link href="#" aria-label="Hidden child link">Hidden child link</link>
+	</div>
+	<div hidden>
+		<div>
+			<a href="#" aria-label="Hidden grandchild anchor">Hidden grandchild anchor</a>
+			<link href="#" aria-label="Hidden grandchild link">Hidden grandchild link</link>
+		</div>
+	</div>
+
+	<a href="#" aria-label="Invisible anchor" aria-hidden="true">Invisible anchor</a>
+	<link href="#" aria-label="Invisible link" aria-hidden="true">Invisible link</link>
+	<div aria-hidden="true">
+		<a href="#" aria-label="Invisible child anchor" aria-hidden="true">Invisible child anchor</a>
+		<link href="#" aria-label="Invisible child link" aria-hidden="true">Invisible child link</link>
+	</div>
+	<div aria-hidden="true">
+		<div>
+			<a href="#" aria-label="Invisible grandchild anchor" aria-hidden="true">Invisible grandchild anchor</a>
+			<link href="#" aria-label="Invisible grandchild link" aria-hidden="true">Invisible grandchild link</link>
+		</div>
+	</div>
 
 	<p>Duplicated focus targets:</p>
 

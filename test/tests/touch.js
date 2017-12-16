@@ -1,6 +1,8 @@
 'use strict';
 
 const { assert } = require('chai');
+const { WebDriver: { attachToSession }, By } = require('selenium-webdriver');
+const { Executor, HttpClient } = require('selenium-webdriver/http');
 
 const Sa11y = require('../..');
 const createServers = require('../tools/create-servers');
@@ -13,6 +15,10 @@ suite('touch', () => {
     baseUrl = servers.fileUrl;
     closeServers = servers.close;
     sa11y = new Sa11y({ url: servers.geckodriverUrl });
+
+    const sessionId = await sa11y.getSessionId();
+    const executor = new Executor(new HttpClient(servers.geckodriverUrl));
+    webdriver = attachToSession(executor, sessionId);
   });
   suiteTeardown(async () => {
     await sa11y.quit();
@@ -68,26 +74,51 @@ suite('touch', () => {
     await sa11y.touch('[aria-label="Div with tabindex"]');
   });
 
-  test('invalid', async () => {
-    const assertUnfocusable = (locator) => {
-      return sa11y.touch(locator)
-        .then(
-          () => { assert(false, 'Expected an error, but no error was thrown'); },
-          (err) => {
-            assert(err);
-            assert.equal(err.name, 'Sa11yError', err.message);
-            assert.equal(err.code, 'SA11Y-ELEMENT-UNFOCUSABLE');
-          });
+  suite('invalid', () => {
+    const assertInvalid = async (locator, code) => {
+      const elements = await webdriver.findElements(By.css(locator));
+
+      // Tests for "imperceptible" elements would be satisfied by locators that
+      // had no corresponding element, but this is not the intention of these
+      // tests. The following assertion guaruntees that the referenced elements
+      // are technically present, proving that the subsequent assertion actually
+      // demonstrates the case of "technically present by not perceptible".
+      assert.equal(
+        elements.length, 1, `Element "${locator}" is present in the document.`
+      );
+
+      try {
+        await sa11y.touch(locator);
+      } catch (err) {
+        assert(err);
+        assert.equal(err.name, 'Sa11yError', err.message);
+        assert.equal(err.code, code, locator);
+        return;
+      }
+      assert(false, 'Expected an error, but no error was thrown');
     };
 
-    await assertUnfocusable('[aria-label="Div"]');
-    await assertUnfocusable('[aria-label="Span"]');
-    await assertUnfocusable('[aria-label="Anchor without href"]');
-    await assertUnfocusable('[aria-label="Hidden anchor"]');
-    await assertUnfocusable('[aria-label="Invisible anchor"]');
-    await assertUnfocusable('[aria-label="Link without href"]');
-    await assertUnfocusable('[aria-label="Hidden link"]');
-    await assertUnfocusable('[aria-label="Invisible link"]');
-    await assertUnfocusable('[aria-label="Disabled button"]');
+    test('unfocusable', async () => {
+      await assertInvalid('[aria-label="Div"]', 'SA11Y-ELEMENT-UNFOCUSABLE');
+      await assertInvalid('[aria-label="Span"]', 'SA11Y-ELEMENT-UNFOCUSABLE');
+      await assertInvalid('[aria-label="Anchor without href"]', 'SA11Y-ELEMENT-UNFOCUSABLE');
+      await assertInvalid('[aria-label="Link without href"]', 'SA11Y-ELEMENT-UNFOCUSABLE');
+      await assertInvalid('[aria-label="Disabled button"]', 'SA11Y-ELEMENT-UNFOCUSABLE');
+    });
+
+    test('imperceptible', async () => {
+      await assertInvalid('[aria-label="Hidden anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Hidden link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Hidden child anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Hidden child link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Hidden grandchild anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Hidden grandchild link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible child anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible child link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible grandchild anchor"]', 'SA11Y-ELEMENT-NOT-FOUND');
+      await assertInvalid('[aria-label="Invisible grandchild link"]', 'SA11Y-ELEMENT-NOT-FOUND');
+    });
   });
 });
