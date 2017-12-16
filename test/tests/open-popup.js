@@ -1,48 +1,25 @@
 'use strict';
 
 const { assert } = require('chai');
-const { WebDriver: { attachToSession }, By } = require('selenium-webdriver');
-const { Executor, HttpClient } = require('selenium-webdriver/http');
+const { By } = require('selenium-webdriver');
 
 const Sa11y = require('../..');
-const createServers = require('../tools/create-servers');
+const lifecycle = require('../tools/lifecycle');
 
 suite('#openPopup', () => {
-  let sa11y, webdriver, baseUrl, closeServers;
+  let sa11y, webdriver;
   const countOpen = async () => {
     const selector ='[role]:not([aria-hidden="true"])';
     const els = await webdriver.findElements(By.css(selector));
     return els.length;
   };
 
-  suiteSetup(async () => {
-    const servers = await createServers();
-    baseUrl = servers.fileUrl;
-    closeServers = servers.close;
-    sa11y = new Sa11y({ url: servers.geckodriverUrl });
-
-    const sessionId = await sa11y.getSessionId();
-    const executor = new Executor(new HttpClient(servers.geckodriverUrl));
-    webdriver = attachToSession(executor, sessionId);
-  });
-
-  suiteTeardown(async () => {
-    await sa11y.quit();
-    await closeServers();
-  });
+  lifecycle((url) => sa11y = new Sa11y({ url: url }));
 
   setup(function() {
-    this.warnings = [];
+    webdriver = this.webdriver;
 
-    sa11y.on('warning', (warning) => this.warnings.push(warning.code));
-
-    return sa11y.get(baseUrl + '/fixtures/popups.html');
-  });
-
-  teardown(function() {
-    sa11y.removeAllListeners();
-
-    assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
+    return sa11y.get(this.baseUrl + '/fixtures/popups.html');
   });
 
   suite('valid popups', () => {

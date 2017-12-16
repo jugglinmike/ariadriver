@@ -1,14 +1,14 @@
 'use strict';
 
 const { assert } = require('chai');
-const { WebDriver: { attachToSession }, By } = require('selenium-webdriver');
-const { Executor, HttpClient } = require('selenium-webdriver/http');
+const { By } = require('selenium-webdriver');
 
 const Sa11y = require('../..');
-const createServers = require('../tools/create-servers');
+const lifecycle = require('../tools/lifecycle');
 
 suite('modal dialogs', () => {
-  let sa11y, webdriver, baseUrl, closeServers;
+  let sa11y, webdriver
+
   const countOpen = async () => {
     const selector ='[role="dialog"]:not([aria-hidden="true"])';
     const els = await webdriver.findElements(By.css(selector));
@@ -21,33 +21,11 @@ suite('modal dialogs', () => {
     while (initialCount === await countOpen()) {}
   };
 
-  suiteSetup(async () => {
-    const servers = await createServers();
-    baseUrl = servers.fileUrl;
-    closeServers = servers.close;
-    sa11y = new Sa11y({ url: servers.geckodriverUrl });
-
-    const sessionId = await sa11y.getSessionId();
-    const executor = new Executor(new HttpClient(servers.geckodriverUrl));
-    webdriver = attachToSession(executor, sessionId);
-  });
-  suiteTeardown(async () => {
-    await sa11y.quit();
-    await closeServers();
-  });
-
+  lifecycle((url) => sa11y = new Sa11y({ url: url }));
   setup(function() {
-    this.warnings = [];
+    webdriver = this.webdriver;
 
-    sa11y.on('warning', (warning) => this.warnings.push(warning.code));
-
-    return sa11y.get(baseUrl + '/fixtures/modal-dialogs.html');
-  });
-
-  teardown(function() {
-    sa11y.removeAllListeners();
-
-    assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
+    return sa11y.get(this.baseUrl + '/fixtures/modal-dialogs.html');
   });
 
   suite('#openModal', () => {
@@ -102,8 +80,8 @@ suite('modal dialogs', () => {
   });
 
   suite('#closeModal', () => {
-    test('reports an error when no modal dialog is open', async () => {
-      await sa11y.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
+    test('reports an error when no modal dialog is open', async function() {
+      await sa11y.get(this.baseUrl + '/fixtures/modal-dialogs-all-closed.html');
 
       try {
         await sa11y.closeModal();
