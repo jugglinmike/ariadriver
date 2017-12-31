@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="./shared.css" />
+</head>
+<body>
+	<div aria-label="Block-level element">Content of a block-level element</div>
+
+	<span aria-label="Inline element">Content of an inline element</span>
+
+	<div aria-label="Nested markup">Element with <b>nested <i>markup</i>.</b></div>
+
+	<div aria-label="Whitespace">Element
+		with     insignificant
+		whitespace.
+	</div>
+
+	<input
+		aria-label="Text input element (no type)"
+		value="Content of text input element (without a `type` attribute)" />
+
+	<input
+		aria-label="Text input element (explicit type)"
+		type="text"
+		value="Content of text input element (with an explicit `type` attribute)" />
+</body>
+</html>
