@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="./shared.css" />
+</head>
+<body>
+	<section>
+		<header>
+			<h4>A heading</h4>
+			<h5>A sub-heading</h5>
+		</header>
+	</section>
+
+	<form>
+		<label>Control inside<input value="Value of inside input" /></label>
+
+		<label>
+			<hr />
+			Control inside   (label bearing non-significant whitespace)
+			<hr />
+
+			<input
+				value="Value of inside input for label bearing non-significant whitespace" />
+		</label>
+
+		<label for="outside-input">Control outside</label>
+		<input type="hidden" value="extra markup" />
+		<input id="outside-input" value="Value of outside input" />
+
+		<label for="outside-input-whitespace">
+			<hr />
+			Control outside   (label bearing non-significant whitespace)
+			<hr />
+		</label>
+		<input type="hidden" value="extra markup" />
+		<input id="outside-input-whitespace"
+			value="Value of outside input for label bearing non-significant whitespace" />
+
+		<label>Control inside - invalid<input /><input /></label>
+	</form>
+</body>
+</html>
