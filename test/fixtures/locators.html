@@ -37,7 +37,12 @@
 		<input id="outside-input-whitespace"
 			value="Value of outside input for label bearing non-significant whitespace" />
 
-		<label>Control inside - invalid<input /><input /></label>
+		<label>Control inside - invalid<input value="1 of 2" /><input value="2 of 2" /></label>
+
+		<label for="unrelated">Control outside - invalid<input /></label>
+		<input id="unrelated"
+			value="Value of outside `<input>` whose `<label>` contains another `<input>`"
+			/>
 	</form>
 </body>
 </html>

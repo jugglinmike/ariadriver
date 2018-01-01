@@ -59,8 +59,8 @@ suite('locators', () => {
 
   suite('CSS selector', () => {
     test('default', async () => {
-      assert(await sa11y.read('section header h4'), 'A heading');
-      assert(await sa11y.read('section header h5'), 'A sub-heading');
+      assert.equal(await sa11y.read('section header h4'), 'A heading');
+      assert.equal(await sa11y.read('section header h5'), 'A sub-heading');
     });
 
     test('default - not found', async () => {
@@ -78,9 +78,9 @@ suite('locators', () => {
 
   suite('labelText', () => {
     test('control element declared inside `<label>` element', async () => {
-      assert(
+      assert.equal(
         await sa11y.read({ labelText: 'Control inside' }),
-        'Value of inside input for label'
+        'Value of inside input'
       );
     });
 
@@ -89,14 +89,14 @@ suite('locators', () => {
         labelText: 'Control inside (label bearing non-significant whitespace)'
       };
 
-      assert(
+      assert.equal(
         await sa11y.read(locator),
         'Value of inside input for label bearing non-significant whitespace'
       );
     });
 
     test('control element declared outside `<label>` element', async () => {
-      assert(
+      assert.equal(
         await sa11y.read({ labelText: 'Control outside' }),
         'Value of outside input'
       );
@@ -107,22 +107,29 @@ suite('locators', () => {
         labelText: 'Control outside (label bearing non-significant whitespace)'
       };
 
-      assert(
+      assert.equal(
         await sa11y.read(locator),
         'Value of outside input for label bearing non-significant whitespace'
       );
     });
 
-    test('invalid declaration of multiple control elements within `<label>` element', async () => {
-      try {
-        await sa11y.read({ labelText: 'Control inside - invalid' });
-      } catch (err) {
-        assert.equal(err.name, 'Sa11yError', err.message);
-        assert.equal(err.code, 'SA11Y-POOR-SEMANTICS');
-        return;
-      }
+    test('invalid declaration of multiple control elements within `<label>` element', async function () {
+      assert.equal(
+        await sa11y.read({ labelText: 'Control inside - invalid' }), '1 of 2'
+      );
 
-      assert(false, 'Expected an error, but no error was thrown');
+      assert.deepEqual(this.warnings, ['SA11Y-POOR-SEMANTICS']);
+      this.warnings.length = 0;
+    });
+
+    test('invalid declaration of exterior control element (not matching element within `<label>` element)', async function() {
+      assert.equal(
+        await sa11y.read({ labelText: 'Control outside - invalid' }),
+        'Value of outside `<input>` whose `<label>` contains another `<input>`'
+      );
+
+      assert.deepEqual(this.warnings, ['SA11Y-POOR-SEMANTICS']);
+      this.warnings.length = 0;
     });
   });
 });
