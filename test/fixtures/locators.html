@@ -13,13 +13,60 @@
 	</section>
 
 	<form>
-		<label>Control inside<input value="Value of inside input" /></label>
+		<label>
+			Control inside - input
+			<input value="Value of inside input" />
+		</label>
 
 		<label>
-			<hr />
-			Control inside   (label bearing non-significant whitespace)
-			<hr />
+			Control inside - button
+			<div></div><span></span>
+			<button value="Value of inside button">Button text</button>
+			<div></div><span></span>
+		</label>
 
+		<label>
+			Control inside - meter
+			<div></div><span></span>
+			<meter value="0.99"></meter>
+			<div></div><span></span>
+		</label>
+
+		<label>
+			Control inside - output
+			<div></div><span></span>
+			<output>Value of inside output</output>
+			<div></div><span></span>
+		</label>
+
+		<label>
+			Control inside - progress
+			<div></div><span></span>
+			<progress min="0" max="100" step="1" value="64"></progress>
+			<div></div><span></span>
+		</label>
+
+		<label>
+			Control inside - select
+			<div></div><span></span>
+			<select>
+				<option>First</option>
+				<option selected value="Value of second inside option">Second</option>
+				<option>Third</option>
+			</select>
+			<div></div><span></span>
+		</label>
+
+		<label>
+			Control inside - textarea
+			<div></div><span></span>
+			<textarea>Value of inside textarea</textarea>
+			<div></div><span></span>
+		</label>
+
+		<label>
+			Control inside   (label bearing
+			non-significant whitespace)
 			<input
 				value="Value of inside input for label bearing non-significant whitespace" />
 		</label>
@@ -29,9 +76,8 @@
 		<input id="outside-input" value="Value of outside input" />
 
 		<label for="outside-input-whitespace">
-			<hr />
-			Control outside   (label bearing non-significant whitespace)
-			<hr />
+			Control outside   (label bearing
+			non-significant whitespace)
 		</label>
 		<input type="hidden" value="extra markup" />
 		<input id="outside-input-whitespace"

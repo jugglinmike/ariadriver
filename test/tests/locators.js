@@ -43,7 +43,10 @@ suite('locators', () => {
     });
 
     test('over-specified strategy', async () => {
-      const locator = { cssSelector: 'header', labelText: 'Control inside' };
+      const locator = {
+        cssSelector: 'header',
+        labelText: 'Control inside - input'
+      };
 
       try {
         await sa11y.read(locator);
@@ -77,11 +80,39 @@ suite('locators', () => {
   });
 
   suite('labelText', () => {
-    test('control element declared inside `<label>` element', async () => {
+    test('control elements declared inside `<label>` element', async () => {
       assert.equal(
-        await sa11y.read({ labelText: 'Control inside' }),
+        await sa11y.read({ labelText: 'Control inside - input' }),
         'Value of inside input'
       );
+
+      //assert.equal(
+      //  await sa11y.read({ labelText: 'Control inside - button Button text' }),
+      //  'Value of inside button'
+      //);
+
+      assert.equal(
+        await sa11y.read({ labelText: 'Control inside - meter' }), 0.99
+      );
+
+      //assert.equal(
+      //  await sa11y.read({ labelText: 'Control inside - output Value of inside output' }),
+      //  'Value of inside output'
+      //);
+
+      assert.equal(
+        await sa11y.read({ labelText: 'Control inside - progress' }), 64
+      );
+
+      //assert.equal(
+      //  await sa11y.read({ labelText: 'Control inside - select' }),
+      //  'Value of second inside option'
+      //);
+
+      //assert.equal(
+      //  await sa11y.read({ labelText: 'Control inside - textarea' }),
+      //  'Value of inside textarea'
+      //);
     });
 
     test('control element declared inside `<label>` element (whitespace)', async () => {
