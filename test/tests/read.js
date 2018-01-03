@@ -57,7 +57,7 @@ suite('read', () => {
     );
   });
 
-  test('Text input elements', async () => {
+  test('Form-related elements', async () => {
     assert.equal(
       await sa11y.read('[aria-label="Text input element (no type)"]'),
       'Content of text input element (without a `type` attribute)'
@@ -67,5 +67,19 @@ suite('read', () => {
       await sa11y.read('[aria-label="Text input element (explicit type)"]'),
       'Content of text input element (with an explicit `type` attribute)'
     );
+
+    assert.equal(await sa11y.read('button'), 'Value of button element');
+
+    assert.equal(await sa11y.read('meter'), 0.45);
+
+    assert.equal(await sa11y.read('output'), 'Value of output element');
+
+    assert.equal(await sa11y.read('progress'), 0.23);
+
+    assert.equal(
+      await sa11y.read('select'), 'Value of second option element'
+    );
+
+    assert.equal(await sa11y.read('textarea'), 'Value of textarea element');
   });
 });
