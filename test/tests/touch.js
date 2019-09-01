@@ -2,43 +2,43 @@
 
 const { assert } = require('chai');
 
-const Sa11y = require('../..');
+const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
 
 suite('touch', () => {
-  let sa11y, baseUrl, closeServers;
+  let ariadriver, baseUrl, closeServers;
 
   suiteSetup(async () => {
     const servers = await createServers();
     baseUrl = servers.fileUrl;
     closeServers = servers.close;
-    sa11y = new Sa11y({ url: servers.geckodriverUrl });
+    ariadriver = new AriaDriver({ url: servers.geckodriverUrl });
   });
   suiteTeardown(async () => {
-    await sa11y.quit();
+    await ariadriver.quit();
     await closeServers();
   });
 
   setup(function() {
     this.warnings = [];
 
-    sa11y.on('warning', (warning) => this.warnings.push(warning.code));
+    ariadriver.on('warning', (warning) => this.warnings.push(warning.code));
 
-    return sa11y.get(baseUrl + '/fixtures/touch.html');
+    return ariadriver.get(baseUrl + '/fixtures/touch.html');
   });
 
   teardown(function() {
-    sa11y.removeAllListeners();
+    ariadriver.removeAllListeners();
 
     assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
   });
 
   test('unfound', async () => {
     try {
-      await sa11y.touch('[aria-label="Non-existent element"]');
+      await ariadriver.touch('[aria-label="Non-existent element"]');
     } catch (err) {
-      assert.equal(err.name, 'Sa11yError', err.message);
-      assert.equal(err.code, 'SA11Y-ELEMENT-NOT-FOUND');
+      assert.equal(err.name, 'AriaDriverError', err.message);
+      assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
       return;
     }
 
@@ -46,37 +46,37 @@ suite('touch', () => {
   });
 
   test('duplicated', async function() {
-    await sa11y.touch('[aria-label="Duplicated anchor"]');
+    await ariadriver.touch('[aria-label="Duplicated anchor"]');
 
-    assert.deepEqual(this.warnings, ['SA11Y-AMBIGUOUS-REFERENCE']);
+    assert.deepEqual(this.warnings, ['ARIADRIVER-AMBIGUOUS-REFERENCE']);
     this.warnings.length = 0;
   });
 
   test('valid', async () => {
-    await sa11y.touch('[aria-label="Anchor with href"]');
-    //await sa11y.touch('[aria-label="Link with href"]');
-    await sa11y.touch('[aria-label="Button"]');
-    await sa11y.touch('[aria-label="Input without type"]');
-    await sa11y.touch('[aria-label="Text input"]');
-    await sa11y.touch('[aria-label="Button input"]');
-    await sa11y.touch('[aria-label="Select"]');
-    await sa11y.touch('[aria-label="Textarea"]');
-    //await sa11y.touch('[aria-label="Menuitem"]');
-    //await sa11y.touch('[aria-label="Draggable div"]');
-    await sa11y.touch('[aria-label="Editing host"]');
-    await sa11y.touch('[aria-label="Browsing context container"]');
-    await sa11y.touch('[aria-label="Div with tabindex"]');
+    await ariadriver.touch('[aria-label="Anchor with href"]');
+    //await ariadriver.touch('[aria-label="Link with href"]');
+    await ariadriver.touch('[aria-label="Button"]');
+    await ariadriver.touch('[aria-label="Input without type"]');
+    await ariadriver.touch('[aria-label="Text input"]');
+    await ariadriver.touch('[aria-label="Button input"]');
+    await ariadriver.touch('[aria-label="Select"]');
+    await ariadriver.touch('[aria-label="Textarea"]');
+    //await ariadriver.touch('[aria-label="Menuitem"]');
+    //await ariadriver.touch('[aria-label="Draggable div"]');
+    await ariadriver.touch('[aria-label="Editing host"]');
+    await ariadriver.touch('[aria-label="Browsing context container"]');
+    await ariadriver.touch('[aria-label="Div with tabindex"]');
   });
 
   test('invalid', async () => {
     const assertUnfocusable = (locator) => {
-      return sa11y.touch(locator)
+      return ariadriver.touch(locator)
         .then(
           () => { assert(false, 'Expected an error, but no error was thrown'); },
           (err) => {
             assert(err);
-            assert.equal(err.name, 'Sa11yError', err.message);
-            assert.equal(err.code, 'SA11Y-ELEMENT-UNFOCUSABLE');
+            assert.equal(err.name, 'AriaDriverError', err.message);
+            assert.equal(err.code, 'ARIADRIVER-ELEMENT-UNFOCUSABLE');
           });
     };
 

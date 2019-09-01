@@ -4,11 +4,11 @@ const { assert } = require('chai');
 const { WebDriver: { attachToSession }, By } = require('selenium-webdriver');
 const { Executor, HttpClient } = require('selenium-webdriver/http');
 
-const Sa11y = require('../..');
+const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
 
 suite('modal dialogs', () => {
-  let sa11y, webdriver, baseUrl, closeServers;
+  let ariadriver, webdriver, baseUrl, closeServers;
   const countOpen = async () => {
     const selector ='[role="dialog"]:not([aria-hidden="true"])';
     const els = await webdriver.findElements(By.css(selector));
@@ -25,27 +25,27 @@ suite('modal dialogs', () => {
     const servers = await createServers();
     baseUrl = servers.fileUrl;
     closeServers = servers.close;
-    sa11y = new Sa11y({ url: servers.geckodriverUrl });
+    ariadriver = new AriaDriver({ url: servers.geckodriverUrl });
 
-    const sessionId = await sa11y.getSessionId();
+    const sessionId = await ariadriver.getSessionId();
     const executor = new Executor(new HttpClient(servers.geckodriverUrl));
     webdriver = attachToSession(executor, sessionId);
   });
   suiteTeardown(async () => {
-    await sa11y.quit();
+    await ariadriver.quit();
     await closeServers();
   });
 
   setup(function() {
     this.warnings = [];
 
-    sa11y.on('warning', (warning) => this.warnings.push(warning.code));
+    ariadriver.on('warning', (warning) => this.warnings.push(warning.code));
 
-    return sa11y.get(baseUrl + '/fixtures/modal-dialogs.html');
+    return ariadriver.get(baseUrl + '/fixtures/modal-dialogs.html');
   });
 
   teardown(function() {
-    sa11y.removeAllListeners();
+    ariadriver.removeAllListeners();
 
     assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
   });
@@ -54,17 +54,17 @@ suite('modal dialogs', () => {
     test('opens well-formed modal as expected', async () => {
       const initialCount = await countOpen();
 
-      await sa11y.openModal('[for="good"]');
+      await ariadriver.openModal('[for="good"]');
 
       assert.equal(await countOpen(), initialCount + 1);
     });
 
     test('reports error when dialog is not opened', async () => {
       try {
-        await sa11y.openModal('[for="non-modal-1"]');
+        await ariadriver.openModal('[for="non-modal-1"]');
       } catch (err) {
-        assert.equal(err.name, 'Sa11yError', err.message);
-        assert.equal(err.code, 'SA11Y-TIMEOUT');
+        assert.equal(err.name, 'AriaDriverError', err.message);
+        assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
         return;
       }
 
@@ -74,24 +74,24 @@ suite('modal dialogs', () => {
     test('waits for slow dialogs to open', async () => {
       const initialCount = await countOpen();
 
-      await sa11y.openModal('[for="good-slow"]');
+      await ariadriver.openModal('[for="good-slow"]');
 
       assert.equal(await countOpen(), initialCount + 1);
     });
 
     test('warns when dialog does not specify `aria-modal`', async function() {
-      await sa11y.openModal('[for="good-poor-semantics"]');
+      await ariadriver.openModal('[for="good-poor-semantics"]');
 
-      assert.deepEqual(this.warnings, ['SA11Y-POOR-SEMANTICS']);
+      assert.deepEqual(this.warnings, ['ARIADRIVER-POOR-SEMANTICS']);
       this.warnings.length = 0;
     });
 
     test('reports an error in the absence of `aria-haspopup`', async () => {
       try {
-        await sa11y.openModal('[for="no-haspopup"]');
+        await ariadriver.openModal('[for="no-haspopup"]');
       } catch (err) {
-        assert.equal(err.name, 'Sa11yError', err.message);
-        assert.equal(err.code, 'SA11Y-INVALID-MARKUP');
+        assert.equal(err.name, 'AriaDriverError', err.message);
+        assert.equal(err.code, 'ARIADRIVER-INVALID-MARKUP');
         return;
       }
 
@@ -103,13 +103,13 @@ suite('modal dialogs', () => {
 
   suite('#closeModal', () => {
     test('reports an error when no modal dialog is open', async () => {
-      await sa11y.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
+      await ariadriver.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
 
       try {
-        await sa11y.closeModal();
+        await ariadriver.closeModal();
       } catch (err) {
-        assert.equal(err.name, 'Sa11yError', err.message);
-        assert.equal(err.code, 'SA11Y-ELEMENT-NOT-FOUND');
+        assert.equal(err.name, 'AriaDriverError', err.message);
+        assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
         return;
       }
 
@@ -120,7 +120,7 @@ suite('modal dialogs', () => {
       await open('good');
       const initialCount = await countOpen();
 
-      await sa11y.closeModal();
+      await ariadriver.closeModal();
 
       assert.equal(await countOpen(), initialCount - 1);
     });
@@ -129,10 +129,10 @@ suite('modal dialogs', () => {
       await open('no-escape-binding');
 
       try {
-        await sa11y.closeModal();
+        await ariadriver.closeModal();
       } catch (err) {
-        assert.equal(err.name, 'Sa11yError', err.message);
-        assert.equal(err.code, 'SA11Y-TIMEOUT');
+        assert.equal(err.name, 'AriaDriverError', err.message);
+        assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
         return;
       }
 
@@ -143,7 +143,7 @@ suite('modal dialogs', () => {
       await open('good-slow');
       const initialCount = await countOpen();
 
-      await sa11y.closeModal();
+      await ariadriver.closeModal();
 
       assert.equal(await countOpen(), initialCount - 1);
     });
