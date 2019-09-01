@@ -20,6 +20,6 @@ module.exports = async (url) => {
     try {
       await test(url);
       return;
-    } catch ({}) {}
+    } catch (_) {}
   }
 };

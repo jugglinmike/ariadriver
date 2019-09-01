@@ -6,7 +6,7 @@ const Sa11y = require('../..');
 const createServers = require('../tools/create-servers');
 
 suite('touch', () => {
-  let sa11y, webdriver, baseUrl, closeServers;
+  let sa11y, baseUrl, closeServers;
 
   suiteSetup(async () => {
     const servers = await createServers();

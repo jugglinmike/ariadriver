@@ -1,11 +1,11 @@
 'use strict';
 
-const http = require('http')
+const http = require('http');
 const path = require('path');
 
-const finalhandler = require('finalhandler')
-const serveStatic = require('serve-static')
- 
+const finalhandler = require('finalhandler');
+const serveStatic = require('serve-static');
+
 module.exports = function() {
   const serve = serveStatic(path.resolve(__dirname, '..'));
   const server = http.createServer((req, res) => {
@@ -13,7 +13,7 @@ module.exports = function() {
   });
 
   const close = () => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       server.close((err) => {
         if (err) {
           reject(err);

@@ -1,6 +1,6 @@
 'use strict';
 
-function handleClick({target}) {
+async function handleClick({target}) {
   const {openRole} = target.dataset;
   const toOpen = document.querySelector(`[role="${openRole}"]`);
 
@@ -8,8 +8,11 @@ function handleClick({target}) {
     return;
   }
 
-  const open = () => toOpen.setAttribute('aria-hidden', 'false');
-  target.getAttribute('aria-label') === 'Slow' ? setTimeout(open, 500) : open();
+  if (target.getAttribute('aria-label') === 'Slow') {
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
+
+  toOpen.setAttribute('aria-hidden', 'false');
 }
 
 Array.from(document.querySelectorAll('[data-open-role]'))

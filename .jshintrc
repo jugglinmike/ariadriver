@@ -1,0 +1,6 @@
+{
+  "esversion": 2018,
+  "node": true,
+  "undef": true,
+  "unused": true
+}
