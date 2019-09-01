@@ -55,7 +55,7 @@ function handleFocus(event) {
   activeDialog.focus();
   event.stopPropagation();
 }
-function handleKeypress(event) {
+function handleKeydown(event) {
   const { keyCode } = event;
 
   if (!activeDialog || keyCode !== 27) {
@@ -70,7 +70,7 @@ function handleKeypress(event) {
 }
 
 document.addEventListener('focus', handleFocus, true);
-document.addEventListener('keypress', handleKeypress, true);
+document.addEventListener('keydown', handleKeydown, true);
 Array.from(document.querySelectorAll('[role="dialog"]:not([data-skip])'))
   .map(create)
   .forEach((openBtn) => document.body.appendChild(openBtn));
