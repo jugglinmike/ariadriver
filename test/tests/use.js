@@ -5,7 +5,7 @@ const { assert } = require('chai');
 const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
 
-suite('touch', () => {
+suite('use', () => {
   let ariadriver, baseUrl, closeServers;
 
   suiteSetup(async () => {
@@ -24,7 +24,7 @@ suite('touch', () => {
 
     ariadriver.on('warning', (warning) => this.warnings.push(warning.code));
 
-    return ariadriver.get(baseUrl + '/fixtures/touch.html');
+    return ariadriver.get(baseUrl + '/fixtures/use.html');
   });
 
   teardown(function() {
@@ -35,7 +35,7 @@ suite('touch', () => {
 
   test('unfound', async () => {
     try {
-      await ariadriver.touch('[aria-label="Non-existent element"]');
+      await ariadriver.use('[aria-label="Non-existent element"]');
     } catch (err) {
       assert.equal(err.name, 'AriaDriverError', err.message);
       assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
@@ -46,38 +46,38 @@ suite('touch', () => {
   });
 
   test('duplicated', async function() {
-    await ariadriver.touch('[aria-label="Duplicated anchor"]');
+    await ariadriver.use('[aria-label="Duplicated anchor"]');
 
     assert.deepEqual(this.warnings, ['ARIADRIVER-AMBIGUOUS-REFERENCE']);
     this.warnings.length = 0;
   });
 
   test('postive `tabindex` value', async function() {
-    await ariadriver.touch('[aria-label="Div with positive tabindex"]');
+    await ariadriver.use('[aria-label="Div with positive tabindex"]');
 
     assert.deepEqual(this.warnings, ['ARIADRIVER-POOR-SEMANTICS']);
     this.warnings.length = 0;
   });
 
   test('valid', async () => {
-    await ariadriver.touch('[aria-label="Anchor with href"]');
-    //await ariadriver.touch('[aria-label="Link with href"]');
-    await ariadriver.touch('[aria-label="Button"]');
-    await ariadriver.touch('[aria-label="Input without type"]');
-    await ariadriver.touch('[aria-label="Text input"]');
-    await ariadriver.touch('[aria-label="Button input"]');
-    await ariadriver.touch('[aria-label="Select"]');
-    await ariadriver.touch('[aria-label="Textarea"]');
-    //await ariadriver.touch('[aria-label="Menuitem"]');
-    //await ariadriver.touch('[aria-label="Draggable div"]');
-    await ariadriver.touch('[aria-label="Editing host"]');
-    await ariadriver.touch('[aria-label="Browsing context container"]');
-    await ariadriver.touch('[aria-label="Div with tabindex"]');
+    await ariadriver.use('[aria-label="Anchor with href"]');
+    //await ariadriver.use('[aria-label="Link with href"]');
+    await ariadriver.use('[aria-label="Button"]');
+    await ariadriver.use('[aria-label="Input without type"]');
+    await ariadriver.use('[aria-label="Text input"]');
+    await ariadriver.use('[aria-label="Button input"]');
+    await ariadriver.use('[aria-label="Select"]');
+    await ariadriver.use('[aria-label="Textarea"]');
+    //await ariadriver.use('[aria-label="Menuitem"]');
+    //await ariadriver.use('[aria-label="Draggable div"]');
+    await ariadriver.use('[aria-label="Editing host"]');
+    await ariadriver.use('[aria-label="Browsing context container"]');
+    await ariadriver.use('[aria-label="Div with tabindex"]');
   });
 
   test('invalid', async () => {
     const assertUnfocusable = (locator) => {
-      return ariadriver.touch(locator)
+      return ariadriver.use(locator)
         .then(
           () => { assert(false, 'Expected an error, but no error was thrown'); },
           (err) => {
