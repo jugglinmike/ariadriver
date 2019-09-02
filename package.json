@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "documentation": "jsdoc --pedantic --destination docs --readme README.md lib",
     "coverage": "nyc --check-coverage npm run test-integration",
     "lint": "jshint lib test",
     "test": "npm run lint && npm run test-integration",
@@ -30,6 +31,7 @@
     "chai": "^4.1.2",
     "finalhandler": "^1.1.0",
     "geckodriver": "^1.16.2",
+    "jsdoc": "^3.6.3",
     "jshint": "^2.10.2",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
