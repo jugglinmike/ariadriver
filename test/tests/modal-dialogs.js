@@ -98,6 +98,8 @@ suite('modal dialogs', () => {
       assert(false, 'Expected an error, but no error was thrown');
     });
 
+    test.skip('reports an error when dialog lacks both the `aria-labelledby` property and the `aria-label` property');
+
     test.skip('reports an error when focus is not bound to the dialog');
   });
 
