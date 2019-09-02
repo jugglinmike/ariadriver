@@ -10,7 +10,7 @@ const createServers = require('../tools/create-servers');
 suite('modal dialogs', () => {
   let ariadriver, webdriver, baseUrl, closeServers;
   const countOpen = async () => {
-    const selector ='[role="dialog"]:not([aria-hidden="true"])';
+    const selector = '[role="dialog"]:not([aria-hidden="true"])';
     const els = await webdriver.findElements(By.css(selector));
     return els.length;
   };
