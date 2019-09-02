@@ -21,7 +21,7 @@
 	<div draggable="true" aria-label="Draggable div">Draggable div</div>
 	<div contenteditable aria-label="Editing host">Editing host</div>
 	<iframe src="about:blank" aria-label="Browsing context container"></iframe>
-	<div tabindex="1" aria-label="Div with tabindex">Div with tabindex</div>
+	<div tabindex="0" aria-label="Div with tabindex">Div with tabindex</div>
 
 	<p>Invalid focus targets:</p>
 
@@ -35,9 +35,10 @@
 	<link href="#" aria-label="Invisible link" aria-hidden="true">Invisible link</link>
 	<button disabled aria-label="Disabled button">Disabled button</button>
 
-	<p>Duplicated focus targets:</p>
+	<p>Discouraged focus targets:</p>
 
 	<a href="#" aria-label="Duplicated anchor">Duplicated anchor #1</a>
 	<a href="#" aria-label="Duplicated anchor">Duplicated anchor #2</a>
+	<div tabindex="1" aria-label="Div with positive tabindex">Div with positive tabindex</div>
 </body>
 </html>

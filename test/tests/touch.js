@@ -52,6 +52,13 @@ suite('touch', () => {
     this.warnings.length = 0;
   });
 
+  test('postive `tabindex` value', async function() {
+    await ariadriver.touch('[aria-label="Div with positive tabindex"]');
+
+    assert.deepEqual(this.warnings, ['ARIADRIVER-POOR-SEMANTICS']);
+    this.warnings.length = 0;
+  });
+
   test('valid', async () => {
     await ariadriver.touch('[aria-label="Anchor with href"]');
     //await ariadriver.touch('[aria-label="Link with href"]');
