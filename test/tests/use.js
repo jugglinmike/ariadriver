@@ -5,7 +5,7 @@ const { assert } = require('chai');
 const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
 
-suite('use', () => {
+suite('#use', () => {
   let ariadriver, baseUrl, closeServers;
 
   suiteSetup(async () => {
