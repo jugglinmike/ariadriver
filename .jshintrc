@@ -1,6 +1,7 @@
 {
   "esversion": 2018,
   "node": true,
+  "quotmark": "single",
   "undef": true,
   "unused": true
 }
