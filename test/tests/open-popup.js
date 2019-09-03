@@ -120,7 +120,7 @@ suite('#openPopup', () => {
     );
 
     test(
-      'Inaccurate valie',
+      'Inaccurate value',
       () => assertFailure('[aria-label="Inaccurate value"]', 'ARIADRIVER-TIMEOUT')
     );
   });
