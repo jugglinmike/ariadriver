@@ -1,6 +1,7 @@
 'use strict';
 
 const { assert } = require('chai');
+const { rejects: assertRejects } = require('assert').strict;
 const { WebDriver, By } = require('selenium-webdriver');
 const { Executor, HttpClient } = require('selenium-webdriver/http');
 
@@ -87,15 +88,15 @@ suite('#openPopup', () => {
 
   suite('invalid popups', () => {
     const assertFailure = async (locator, code) => {
-      try {
-        await ariadriver.openPopup(locator);
-      } catch (err) {
-        assert(err);
-        assert.equal(err.name, 'AriaDriverError');
-        assert.equal(err.code, code);
-        return;
-      }
-      assert(false, 'Expected an error, but no error was thrown');
+      await assertRejects(
+        () => ariadriver.openPopup(locator),
+        (err) => {
+          assert(err);
+          assert.equal(err.name, 'AriaDriverError');
+          assert.equal(err.code, code);
+          return true;
+        }
+      );
     };
 
     test(

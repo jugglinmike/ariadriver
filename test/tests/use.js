@@ -1,6 +1,7 @@
 'use strict';
 
 const { assert } = require('chai');
+const { rejects: assertRejects } = require('assert').strict;
 
 const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
@@ -34,15 +35,14 @@ suite('#use', () => {
   });
 
   test('unfound', async () => {
-    try {
-      await ariadriver.use('[aria-label="Non-existent element"]');
-    } catch (err) {
-      assert.equal(err.name, 'AriaDriverError', err.message);
-      assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
-      return;
-    }
-
-    assert(false, 'Expected an error, but no error was thrown');
+    await assertRejects(
+      () => ariadriver.use('[aria-label="Non-existent element"]'),
+      (err) => {
+        assert.equal(err.name, 'AriaDriverError', err.message);
+        assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
+        return true;
+      }
+    );
   });
 
   test('duplicated', async function() {

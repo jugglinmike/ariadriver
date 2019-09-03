@@ -1,6 +1,7 @@
 'use strict';
 
 const { assert } = require('chai');
+const { rejects: assertRejects } = require('assert').strict;
 const { WebDriver, By } = require('selenium-webdriver');
 const { Executor, HttpClient } = require('selenium-webdriver/http');
 
@@ -63,15 +64,14 @@ suite('modal dialogs', () => {
     });
 
     test('reports error when dialog is not opened', async () => {
-      try {
-        await ariadriver.openModal('[for="non-modal-1"]');
-      } catch (err) {
-        assert.equal(err.name, 'AriaDriverError', err.message);
-        assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
-        return;
-      }
-
-      assert(false, 'Expected an error, but no error was thrown');
+      await assertRejects(
+        () => ariadriver.openModal('[for="non-modal-1"]'),
+        (err) => {
+          assert.equal(err.name, 'AriaDriverError', err.message);
+          assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
+          return true;
+        }
+      );
     });
 
     test('waits for slow dialogs to open', async () => {
@@ -90,15 +90,14 @@ suite('modal dialogs', () => {
     });
 
     test('reports an error in the absence of `aria-haspopup`', async () => {
-      try {
-        await ariadriver.openModal('[for="no-haspopup"]');
-      } catch (err) {
-        assert.equal(err.name, 'AriaDriverError', err.message);
-        assert.equal(err.code, 'ARIADRIVER-INVALID-MARKUP');
-        return;
-      }
-
-      assert(false, 'Expected an error, but no error was thrown');
+      await assertRejects(
+        () => ariadriver.openModal('[for="no-haspopup"]'),
+        (err) => {
+          assert.equal(err.name, 'AriaDriverError', err.message);
+          assert.equal(err.code, 'ARIADRIVER-INVALID-MARKUP');
+          return true;
+        }
+      );
     });
 
     test.skip('reports an error when dialog lacks both the `aria-labelledby` property and the `aria-label` property');
@@ -110,15 +109,14 @@ suite('modal dialogs', () => {
     test('reports an error when no modal dialog is open', async () => {
       await ariadriver.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
 
-      try {
-        await ariadriver.closeModal();
-      } catch (err) {
-        assert.equal(err.name, 'AriaDriverError', err.message);
-        assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
-        return;
-      }
-
-      assert(false, 'Expected an error, but no error was thrown');
+      await assertRejects(
+        () => ariadriver.closeModal(),
+        (err) => {
+          assert.equal(err.name, 'AriaDriverError', err.message);
+          assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
+          return true;
+        }
+      );
     });
 
     test('closes open modal dialog as expected', async () => {
@@ -133,15 +131,14 @@ suite('modal dialogs', () => {
     test('reports an error when dialog is not closed', async () => {
       await open('no-escape-binding');
 
-      try {
-        await ariadriver.closeModal();
-      } catch (err) {
-        assert.equal(err.name, 'AriaDriverError', err.message);
-        assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
-        return;
-      }
-
-      assert(false, 'Expected an error, but no error was thrown');
+      await assertRejects(
+        () => ariadriver.closeModal(),
+        (err) => {
+          assert.equal(err.name, 'AriaDriverError', err.message);
+          assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
+          return true;
+        }
+      );
     });
 
     test('waits for slow dialogs to close', async () => {
