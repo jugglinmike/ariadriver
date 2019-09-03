@@ -1,7 +1,7 @@
 'use strict';
 
 const { assert } = require('chai');
-const { WebDriver: { attachToSession }, By } = require('selenium-webdriver');
+const { WebDriver, By } = require('selenium-webdriver');
 const { Executor, HttpClient } = require('selenium-webdriver/http');
 
 const AriaDriver = require('../..');
@@ -23,7 +23,10 @@ suite('#openPopup', () => {
 
     const sessionId = await ariadriver.getSessionId();
     const executor = new Executor(new HttpClient(servers.geckodriverUrl));
-    webdriver = attachToSession(executor, sessionId);
+    webdriver = new WebDriver(sessionId, executor);
+    // W3C compliance is typically inferred during session creation, so it must
+    // be explicitly enabled here.
+    webdriver.w3c = true;
   });
 
   suiteTeardown(async () => {

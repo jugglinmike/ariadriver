@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/jugglinmike/ariadriver#readme",
   "dependencies": {
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "4.0.0-alpha.4"
   },
   "devDependencies": {
     "chai": "^4.1.2",
