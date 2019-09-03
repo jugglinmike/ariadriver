@@ -120,11 +120,6 @@ suite('#openPopup', () => {
     );
 
     test(
-      'Invalid value',
-      () => assertFailure('[aria-label="Invalid value"]', 'ARIADRIVER-INVALID-MARKUP')
-    );
-
-    test(
       'Inaccurate valie',
       () => assertFailure('[aria-label="Inaccurate value"]', 'ARIADRIVER-TIMEOUT')
     );
