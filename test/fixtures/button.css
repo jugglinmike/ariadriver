@@ -1,0 +1,8 @@
+button, [role="button"] {
+  cursor: pointer;
+}
+
+:not(button)[role="button"] {
+  border: 1px solid #444;
+  min-height: 1em;
+}

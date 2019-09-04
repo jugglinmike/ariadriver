@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="./shared.css" />
+	<link rel="stylesheet" href="./button.css" />
+	<title>Button</title>
+</head>
+<body>
+	<script>
+	</script>
+	<p>Valid buttons:</p>
+
+	<button id="element-without-label-with-text">
+		Button element, accessible name via text content
+	</button>
+	<button aria-label="Button element with label">
+	</button> (Button element, accessible name via `aria-label`)
+	<button aria-labelledby="button-label">
+	</button>
+	<span id="button-label">
+		(Button element, accessible name via `aria-labelledby`)
+	</span>
+
+	<div role="button" tabindex="0" aria-label="Div with role">
+	</div> (Button role, accessible name via `aria-label`)
+
+	<button
+		aria-label="Fast toggle button"
+		aria-pressed="false"
+		onclick="toggle(this)">
+	</button>
+
+	<button
+		aria-label="Slow toggle button"
+		aria-pressed="false"
+		onclick="setTimeout(() => toggle(this), 500)">
+	</button>
+
+	<p>Invalid buttons:</p>
+
+	<button id="element-without-label-without-text">
+	</button> (Button element without label)
+	<div role="button" tabindex="0" id="role-without-label-without-text">
+	</div> (Button role without label)
+	<div tabindex="0" aria-label="Div without role">
+	</div> (Div without role)
+
+	<button aria-label="Unresponsive toggle button" aria-pressed="false">
+		Unresponsive toggle button
+	</button>
+
+	<script src="./button.js"></script>
+</body>
+</html>
