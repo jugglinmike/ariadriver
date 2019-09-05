@@ -22,13 +22,15 @@ the correctness of their work.
                                                  '------+---+---'
 
 The differences in the paths used by developers and users to access web
-applications cause a number of problems. Web developers have little insight
-into the correctness of their application from the perspective of a visitor
-using Assistive Technology. Instead, they typically build a separate layer to
-facilitate testing--one that circumvents the patterns used by Assistive
-Technology. Maintaining that layer is a drain on their time and attention, and
-it only indirectly benefits the people who use the application (i.e. by
-enabling a limited form of testing).
+applications cause a number of problems. Web developers have little
+insight into the correctness of their application from the perspective
+of a visitor using Assistive Technology. Instead, they typically build a
+separate layer to facilitate testing, comprised of so-called ["page
+objects"](http://elementalselenium.com/tips/7-use-a-page-object). This
+layer commonly circumvents the patterns used by Assistive Technology.
+Maintaining it is a drain on their time and attention, and it only
+indirectly benefits the people who use the application (i.e. by enabling
+a limited form of testing).
 
 The goal of the AriaDriver project is to converge the paths that developers and
 users take to reach web applications. By giving developers a more wholistic
