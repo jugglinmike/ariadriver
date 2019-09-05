@@ -16,7 +16,7 @@ the correctness of their work.
                                                  .--------------.
                                                  | Application  |
                                                  +----------.   |
-    Developer --> WebDriver --> page objects --->| HTML     |   |
+    Developer --> page objects ---> WebDriver -->| HTML     |   |
                                                  +------.   |   |
     User ---------> Asssive Technology --------->| ARIA |   |   |
                                                  '------+---+---'
