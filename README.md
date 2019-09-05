@@ -61,6 +61,8 @@ then:
 - the practice of accessibility-driven testing would be recognized by more
   developers and (thanks to the language-agnostic design of the WebDriver
   protocol) usable from more projects
+- operations would be more efficient because fewer instructions would have to
+  be sent "over the wire" of the WebDriver protocol
 
 ## License
 
