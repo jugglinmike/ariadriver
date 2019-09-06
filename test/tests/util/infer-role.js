@@ -64,7 +64,22 @@ suite('inferRole', () => {
     '<table><colgroup><col data-subject></col></colgrop></table>', null
   );
   roleTest('<table><colgroup data-subject></colgroup></table>', null);
-  roleTest('<datalist data-subject></datalist>', 'listbox');
+  roleTest('<datalist data-subject></datalist>', null);
+  roleTest('<datalist id="suggestions" data-subject></datalist>', null);
+  roleTest(
+    '<a list="suggestions"></a>' +
+      '<datalist id="suggestions" data-subject></datalist>',
+    null
+  );
+  roleTest(
+    '<input type="text" list=""></input><datalist data-subject></datalist>',
+    null
+  );
+  roleTest(
+    '<input type="text" list="suggestions"></input>' +
+      '<datalist id="suggestions" data-subject></datalist>',
+    'listbox'
+  );
   roleTest('<dl><dt></dt><dd data-subject></dd></dl>', 'definition');
   roleTest('<del data-subject></del>', null);
   roleTest('<details data-subject></details>', null);
