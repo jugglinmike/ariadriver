@@ -12,7 +12,7 @@
     "coverage": "nyc --check-coverage npm run test-integration",
     "lint": "jshint lib test",
     "test": "npm run lint && npm run test-integration",
-    "test-integration": "mocha --ui tdd --timeout 5000 test/tests"
+    "test-integration": "mocha --recursive --ui tdd --timeout 5000 test/tests"
   },
   "repository": {
     "type": "git",

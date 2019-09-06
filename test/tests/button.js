@@ -64,6 +64,12 @@ suite('#pushButton', () => {
       assert.equal(clickCount, 1);
     });
 
+    test('reset input', async () => {
+      await ariadriver.pushButton('[aria-label="Reset input"]');
+      let { clickCount } = await inspect('[aria-label="Reset input"]');
+      assert.equal(clickCount, 1);
+    });
+
     test('toggle button - fast', async () => {
       await ariadriver.pushButton('[aria-label="Fast toggle button"]');
       let { clickCount, ariaPressed } =

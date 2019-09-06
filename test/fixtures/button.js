@@ -13,7 +13,7 @@
   }
 
   document.body.addEventListener('click', ({target}) => {
-    if (!target.matches('button, [role="button"]')) {
+    if (!target.matches('button, input[type="reset"], [role="button"]')) {
       return;
     }
 
