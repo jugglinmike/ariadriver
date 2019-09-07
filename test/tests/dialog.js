@@ -8,7 +8,7 @@ const { Executor, HttpClient } = require('selenium-webdriver/http');
 const AriaDriver = require('../..');
 const createServers = require('../tools/create-servers');
 
-suite('modal dialogs', () => {
+suite('dialog', () => {
   let ariadriver, webdriver, baseUrl, closeServers;
   const countOpen = async () => {
     const selector = '[role="dialog"]:not([aria-hidden="true"])';
@@ -45,7 +45,7 @@ suite('modal dialogs', () => {
 
     ariadriver.on('warning', (warning) => this.warnings.push(warning.code));
 
-    return ariadriver.get(baseUrl + '/fixtures/modal-dialogs.html');
+    return ariadriver.get(baseUrl + '/fixtures/dialog.html');
   });
 
   teardown(function() {
@@ -54,18 +54,18 @@ suite('modal dialogs', () => {
     assert.deepEqual(this.warnings, [], 'No unrecognized warnings');
   });
 
-  suite('#openModal', () => {
+  suite('#openDialog', () => {
     test('opens well-formed modal as expected', async () => {
       const initialCount = await countOpen();
 
-      await ariadriver.openModal('[for="good"]');
+      await ariadriver.openDialog('[for="good"]');
 
       assert.equal(await countOpen(), initialCount + 1);
     });
 
     test('reports error when dialog is not opened', async () => {
       await assertRejects(
-        () => ariadriver.openModal('[for="non-modal-1"]'),
+        () => ariadriver.openDialog('[for="non-modal-1"]'),
         (err) => {
           assert.equal(err.name, 'AriaDriverError', err.message);
           assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
@@ -77,13 +77,13 @@ suite('modal dialogs', () => {
     test('waits for slow dialogs to open', async () => {
       const initialCount = await countOpen();
 
-      await ariadriver.openModal('[for="good-slow"]');
+      await ariadriver.openDialog('[for="good-slow"]');
 
       assert.equal(await countOpen(), initialCount + 1);
     });
 
     test('warns when dialog does not specify `aria-modal`', async function() {
-      await ariadriver.openModal('[for="good-poor-semantics"]');
+      await ariadriver.openDialog('[for="good-poor-semantics"]');
 
       assert.deepEqual(this.warnings, ['ARIADRIVER-POOR-SEMANTICS']);
       this.warnings.length = 0;
@@ -91,7 +91,7 @@ suite('modal dialogs', () => {
 
     test('reports an error in the absence of `aria-haspopup`', async () => {
       await assertRejects(
-        () => ariadriver.openModal('[for="no-haspopup"]'),
+        () => ariadriver.openDialog('[for="no-haspopup"]'),
         (err) => {
           assert.equal(err.name, 'AriaDriverError', err.message);
           assert.equal(err.code, 'ARIADRIVER-INVALID-MARKUP');
@@ -105,12 +105,12 @@ suite('modal dialogs', () => {
     test.skip('reports an error when focus is not bound to the dialog');
   });
 
-  suite('#closeModal', () => {
+  suite('#closeDialog', () => {
     test('reports an error when no modal dialog is open', async () => {
-      await ariadriver.get(baseUrl + '/fixtures/modal-dialogs-all-closed.html');
+      await ariadriver.get(baseUrl + '/fixtures/dialog-all-closed.html');
 
       await assertRejects(
-        () => ariadriver.closeModal(),
+        () => ariadriver.closeDialog(),
         (err) => {
           assert.equal(err.name, 'AriaDriverError', err.message);
           assert.equal(err.code, 'ARIADRIVER-ELEMENT-NOT-FOUND');
@@ -123,7 +123,7 @@ suite('modal dialogs', () => {
       await open('good');
       const initialCount = await countOpen();
 
-      await ariadriver.closeModal();
+      await ariadriver.closeDialog();
 
       assert.equal(await countOpen(), initialCount - 1);
     });
@@ -132,7 +132,7 @@ suite('modal dialogs', () => {
       await open('no-escape-binding');
 
       await assertRejects(
-        () => ariadriver.closeModal(),
+        () => ariadriver.closeDialog(),
         (err) => {
           assert.equal(err.name, 'AriaDriverError', err.message);
           assert.equal(err.code, 'ARIADRIVER-TIMEOUT');
@@ -145,7 +145,7 @@ suite('modal dialogs', () => {
       await open('good-slow');
       const initialCount = await countOpen();
 
-      await ariadriver.closeModal();
+      await ariadriver.closeDialog();
 
       assert.equal(await countOpen(), initialCount - 1);
     });
