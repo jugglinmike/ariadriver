@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "documentation": "jsdoc --pedantic --destination docs --readme README.md lib",
+    "documentation": "jsdoc --recurse --pedantic --destination docs --readme README.md lib",
     "coverage": "nyc --check-coverage npm run test-integration",
     "lint": "jshint lib test",
     "test": "npm run lint && npm run test-integration",
