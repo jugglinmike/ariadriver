@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>ariadriver</h1>
+<p>A Node.js library for testing web applications using WebDriver and ARIA</p>
+<h2>Explanation</h2>
+<p><a href="https://w3c.github.io/aria/">WAI-ARIA</a> and
+<a href="https://w3c.github.io/webdriver/">WebDriver</a> are two distinct web standards
+with highly similar goals: they both aim to enable machine-mediated interaction
+with web pages. In the case of ARIA, the machine is some Assistive Technology
+(e.g. a screen reader or a braille display), and it enables a person with a
+disability to effectively browse the web. In the case of WebDriver, the machine
+is a script written by a web developer, and it enables the developer to verify
+the correctness of their work.</p>
+<pre><code>                                             .--------------.
+                                             | Application  |
+                                             +----------.   |
+Developer --&gt; page objects ---&gt; WebDriver --&gt;| HTML     |   |
+                                             +------.   |   |
+User ---------&gt; Asssive Technology ---------&gt;| ARIA |   |   |
+                                             '------+---+---'
+</code></pre>
+<p>The differences in the paths used by developers and users to access web
+applications cause a number of problems. Web developers have little
+insight into the correctness of their application from the perspective
+of a visitor using Assistive Technology. Instead, they typically build a
+separate layer to facilitate testing, comprised of so-called <a href="http://elementalselenium.com/tips/7-use-a-page-object">&quot;page
+objects&quot;</a>. This
+layer commonly circumvents the patterns used by Assistive Technology.
+Maintaining it is a drain on their time and attention, and it only
+indirectly benefits the people who use the application (i.e. by enabling
+a limited form of testing).</p>
+<p>The goal of the AriaDriver project is to converge the paths that developers and
+users take to reach web applications. By giving developers a more wholistic
+view into their own applications, AriaDriver can help web authors create more
+accessible applications. By implementing <a href="https://w3c.github.io/aria-practices/">accessible user interface
+patterns</a>, AriaDriver can also reduce
+the need for custom testing logic and improve test stability.</p>
+<pre><code>                                             .--------------.
+                                             | Application  |
+                                             +----------.   |
+Developer -------&gt; AriaDriver -------.       | HTML     |   |
+                                      \      +------.   |   |
+User ---------&gt; Asssive Technology ---------&gt;| ARIA |   |   |
+                                             '------+---+---'
+</code></pre>
+<h2>Standardization</h2>
+<p>Although a Node.js library such as this may be useful for some developers, its
+benefits could be magnified through standardization. If the API offered by this
+library were instead defined as &quot;commands&quot; in the W3C WebDriver specification,
+then:</p>
+<ul>
+<li>future enhancements could be wholistically designed by the experts who
+contribute to the relevant standards, that is: <a href="https://www.w3.org/testing/browser/">the Browser Testing and Tools
+Working Group</a> and <a href="https://www.w3.org/WAI/">the Web
+Accessibility Initiative</a></li>
+<li>the practice of accessibility-driven testing would be recognized by more
+developers and (thanks to the language-agnostic design of the WebDriver
+protocol) usable from more projects</li>
+<li>operations would be more efficient because fewer instructions would have to
+be sent &quot;over the wire&quot; of the WebDriver protocol</li>
+</ul>
+<h2>License</h2>
+<p>Copyright 2017 Mike Pennisi under <a href="https://www.gnu.org/licenses/gpl-3.0.html">the GNU General Public License
+v3.0</a></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="external-EventEmitter.html">EventEmitter</a></li></ul><h3>Classes</h3><ul><li><a href="AriaDriver.html">AriaDriver</a></li><li><a href="FutureAriaDriver.html">FutureAriaDriver</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 14:55:57 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
